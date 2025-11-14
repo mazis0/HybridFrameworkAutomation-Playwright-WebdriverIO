@@ -11,7 +11,7 @@ Designed to run **Web + Mobile tests together in a single end-to-end scenario**,
 - 🔹 Page Object Model (POM) structure
 - 🔹 Custom utilities & reusable functions
 - 🔹 Tag-based test filtering
-- 🔹 Tag-based test filtering
+- 🔹 Execute tests on multiple environments
 
 ---
 
