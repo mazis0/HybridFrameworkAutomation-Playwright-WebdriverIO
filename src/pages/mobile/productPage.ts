@@ -30,23 +30,23 @@ export default class LoginPage {
 
     async clickImageProduct(productName: string){
       const productLocator = `//android.widget.TextView[@content-desc='Product Title' and @text='${productName}']/preceding-sibling::*`;
-      const product = await this.driver.$(productLocator);
-      try {
-          const isDisplayed = await product.isDisplayed();
-          if (isDisplayed) {
+      try{
+          const isOnProductPage = await this.driver.$(this.Elements.labelProducts).isDisplayed();
+          if(isOnProductPage){
+            this.base.scrollToElement(productLocator,"up",5);
             const globalState = GlobalState.getInstance();
             globalState.addProductMobile(productName);
             await this.base.waitAndClick(productLocator);
-          } else {
+          }else {
             await this.base.backButton();
+            this.base.scrollToElement(productLocator,"up",5);
             const globalState = GlobalState.getInstance();
             globalState.addProductMobile(productName);
             await this.base.waitAndClick(productLocator);
-          }
-        } catch (error) {
-          console.error(`Error while handling product "${productName}":`, error);
-        }
-
+            }
+        }catch(error){
+            console.error(`Error while handling product "${productName}":`, error);
+      }
             }
 
     async clickLoginMenu(){
