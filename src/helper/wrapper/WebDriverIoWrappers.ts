@@ -132,7 +132,19 @@ export default class WebDriverIoWrappers {
   
     for (let i = 0; i < scrollCount; i++) {
       const element = await this.driver.$(selector);
-      const exists = await element.isExisting();
+      const exists = await this.driver.waitUntil(
+        async () => {
+          try {
+            return await element.isExisting();
+          } catch {
+            return false;
+          }
+        },
+        {
+          timeout: 300,   // 
+          interval: 200    // cek setiap 200 ms
+        }
+      ).catch(() => false);
   
       if (exists) {
         console.log(`✅ Element found after ${i} scroll(s): ${selector}`);
@@ -159,7 +171,7 @@ export default class WebDriverIoWrappers {
             },
           ]);
           
-          await this.driver.pause(800);
+          await this.driver.pause(200);
           
       }
     }
@@ -172,7 +184,6 @@ export default class WebDriverIoWrappers {
   
     return await this.driver.$(selector);
   }
-  
 
 
   /**
